@@ -1,5 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Organization, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject(:organization) { create :organization }
+
+  it { is_expected.to be_valid }
+
+  it 'validates presence of name' do
+    expect(build :organization, name: nil).to be_invalid
+  end
 end

@@ -18,7 +18,7 @@ class OrganizationsController < ApplicationController
   # POST /organizations
   # POST /organizations.json
   def create
-    @organization = Organization.new(params[:organization])
+    @organization = Organization.new(organization_params)
 
     if @organization.save
       render json: @organization, status: :created, location: @organization
@@ -32,7 +32,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization = Organization.find(params[:id])
 
-    if @organization.update(params[:organization])
+    if @organization.update(organization_params)
       head :no_content
     else
       render json: @organization.errors, status: :unprocessable_entity
@@ -46,5 +46,11 @@ class OrganizationsController < ApplicationController
     @organization.destroy
 
     head :no_content
+  end
+
+private
+
+  def organization_params
+    params.require(:organization).permit(:name)
   end
 end

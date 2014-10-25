@@ -5,5 +5,8 @@ FactoryGirl.define do
     password 'secret'
   end
 
+  factory :organization do
+    sequence(:name) { |n| "company-#{n}" }
+  end
 end
 
