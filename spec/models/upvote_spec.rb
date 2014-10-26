@@ -12,4 +12,11 @@ RSpec.describe Upvote, :type => :model do
   it 'validates presence of problem' do
     expect(build :upvote, problem: nil).to be_invalid
   end
+
+  it 'validates uniqueness of one user upvote per problem' do
+    user = create :user
+    problem = create :problem
+    create :upvote, problem: problem, user: user
+    expect(build :upvote, problem: problem, user: user).to be_invalid
+  end
 end

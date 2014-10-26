@@ -4,4 +4,6 @@ class Upvote < ActiveRecord::Base
 
   validates :problem, presence: true
   validates :user, presence: true
+
+  validates :user, uniqueness: { scope: :problem }
 end
