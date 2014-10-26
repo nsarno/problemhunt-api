@@ -1,24 +1,11 @@
 class UpvotesController < ApplicationController
-  # GET /upvotes
-  # GET /upvotes.json
-  def index
-    @upvotes = Upvote.all
-
-    render json: @upvotes
-  end
-
-  # GET /upvotes/1
-  # GET /upvotes/1.json
-  def show
-    @upvote = Upvote.find(params[:id])
-
-    render json: @upvote
-  end
+  before_filter :authenticate
+  before_filter :set_problem
+  before_filter :set_user
 
   # POST /upvotes
-  # POST /upvotes.json
   def create
-    @upvote = Upvote.new(params[:upvote])
+    @upvote = @problem.upvotes.new(user: @user)
 
     if @upvote.save
       render json: @upvote, status: :created, location: @upvote
@@ -27,24 +14,17 @@ class UpvotesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /upvotes/1
-  # PATCH/PUT /upvotes/1.json
-  def update
-    @upvote = Upvote.find(params[:id])
+private
 
-    if @upvote.update(params[:upvote])
-      head :no_content
-    else
-      render json: @upvote.errors, status: :unprocessable_entity
-    end
+  def set_problem
+    @problem = Problem.find(params[:problem_id])  
   end
 
-  # DELETE /upvotes/1
-  # DELETE /upvotes/1.json
-  def destroy
-    @upvote = Upvote.find(params[:id])
-    @upvote.destroy
+  def set_user
+    @user = Problem.find(params[:user_id]) 
+  end
 
-    head :no_content
+  def upvote_params
+    params.require(:upvote).permit(:problem_id, :user_id)
   end
 end

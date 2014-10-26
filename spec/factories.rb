@@ -13,5 +13,10 @@ FactoryGirl.define do
     organization
     description "Spiders! Spiders everywhere!"
   end
+
+  factory :upvote do
+    problem
+    user
+  end
 end
 
