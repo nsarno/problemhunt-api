@@ -1,24 +1,7 @@
 class OrganizationsController < ApplicationController
-  #before_filter :authenticate
-
-  # GET /organizations
-  # GET /organizations.json
-  def index
-    @organizations = Organization.all
-
-    render json: @organizations
-  end
-
-  # GET /organizations/1
-  # GET /organizations/1.json
-  def show
-    @organization = Organization.find(params[:id])
-
-    render json: @organization
-  end
+  before_filter :authenticate
 
   # POST /organizations
-  # POST /organizations.json
   def create
     @organization = Organization.new(organization_params)
 
@@ -27,27 +10,6 @@ class OrganizationsController < ApplicationController
     else
       render json: @organization.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /organizations/1
-  # PATCH/PUT /organizations/1.json
-  def update
-    @organization = Organization.find(params[:id])
-
-    if @organization.update(organization_params)
-      head :no_content
-    else
-      render json: @organization.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /organizations/1
-  # DELETE /organizations/1.json
-  def destroy
-    @organization = Organization.find(params[:id])
-    @organization.destroy
-
-    head :no_content
   end
 
 private

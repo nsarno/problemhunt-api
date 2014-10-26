@@ -15,6 +15,6 @@ RSpec.describe Problem, :type => :model do
 
   it 'validates description length' do
     expect(build :problem, description: 'a' * 201).to be_invalid
-    expect(build :problem, description: 'a' * 14).to be_invalid
+    expect(build :problem, description: 'a' * 4).to be_invalid
   end
 end
