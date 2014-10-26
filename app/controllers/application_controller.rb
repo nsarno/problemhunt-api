@@ -21,6 +21,11 @@ private
     end
   end
 
+  def current_user
+    @current_user
+  end
+
   helper_method :authenticate
+  helper_method :current_user
 end
 

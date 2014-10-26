@@ -23,7 +23,7 @@ module ProblemHunt
     config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :options]
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :patch, :options]
       end
     end
 

@@ -1,7 +1,7 @@
 class UpvotesController < ApplicationController
   before_filter :authenticate
-  before_filter :set_problem
-  before_filter :set_user
+  before_filter :set_problem, only: [:create]
+  before_filter :set_user, only: [:create]
 
   # POST /upvotes
   def create
@@ -12,6 +12,13 @@ class UpvotesController < ApplicationController
     else
       render json: @upvote.errors, status: :unprocessable_entity
     end
+  end
+
+  # DELETE /upvotes/:id
+  def destroy
+    upvote = Upvote.find(params[:id])
+    upvote.destroy
+    head :no_content
   end
 
 private
