@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate
+ #before_filter :authenticate
 
   def index
     render json: User.all

@@ -2,7 +2,11 @@ class AuthController < ApplicationController
   before_filter :set_user, only: [:create]
 
   def create
-    render json: { token: AuthToken.issue_token({ user_id: @user.id }) }
+    
+    render json: { 
+      token: AuthToken.issue_token({ user_id: @user.id }),
+      user_id: @user.id
+    }
   end
 
 private
