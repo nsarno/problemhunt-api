@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_filter :authenticate
+  #before_filter :authenticate
 
   # GET /organizations
   # GET /organizations.json
