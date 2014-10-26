@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20141026095758) do
     t.datetime "updated_at"
   end
 
+  add_index "upvotes", ["problem_id", "user_id"], name: "index_upvotes_on_problem_id_and_user_id", unique: true, using: :btree
   add_index "upvotes", ["problem_id"], name: "index_upvotes_on_problem_id", using: :btree
   add_index "upvotes", ["user_id"], name: "index_upvotes_on_user_id", using: :btree
 

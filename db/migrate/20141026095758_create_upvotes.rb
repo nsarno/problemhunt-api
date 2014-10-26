@@ -6,5 +6,7 @@ class CreateUpvotes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :upvotes, [:problem_id, :user_id], unique: true
   end
 end
