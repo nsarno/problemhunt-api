@@ -22,8 +22,8 @@ module ProblemHunt
 
     config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
       allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :patch, :options]
+        origins 'https://problemhunt.firebaseapp.com'
+        resource 'https://problemhunt.firebaseapp.com', :headers => :any, :methods => [:get, :post, :put, :delete, :patch, :options]
       end
     end
 
