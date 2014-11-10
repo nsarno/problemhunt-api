@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20141026095758) do
     t.datetime "updated_at"
   end
 
+  add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
+
   create_table "problems", force: true do |t|
     t.string   "description"
     t.integer  "organization_id"
