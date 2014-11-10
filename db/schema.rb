@@ -47,9 +47,6 @@ ActiveRecord::Schema.define(version: 20141026095758) do
     t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "organization_id"
   end
-
-  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
 end

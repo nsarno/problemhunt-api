@@ -13,8 +13,7 @@ private
 
   def set_user
     @user = User.find_by(email: auth_params[:email])
-    @user = User.create(auth_params) unless @user.present?  
-    head :unauthorized unless @user.authenticate(auth_params[:password]) 
+    head :not_found unless @user.present? && @user.authenticate(auth_params[:password])
   end
 
   def auth_params

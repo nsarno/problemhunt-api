@@ -17,4 +17,3 @@ RSpec.describe User, :type => :model do
     expect(build :user, email: subject.email).to be_invalid
   end
 end
-

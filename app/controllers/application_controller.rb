@@ -11,13 +11,13 @@ private
     head :not_found
   end
 
-  def authenticate 
+  def authenticate
     begin
       token = request.headers['Authorization'].split(' ').last
       payload, header = AuthToken.valid?(token)
       @current_user = User.find_by(id: payload['user_id'])
     rescue
-      head :unauthorized  
+      head :unauthorized
     end
   end
 
@@ -28,4 +28,3 @@ private
   helper_method :authenticate
   helper_method :current_user
 end
-

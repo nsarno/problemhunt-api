@@ -4,9 +4,4 @@ class Problem < ActiveRecord::Base
 
   validates :organization, presence: true
   validates :description, presence: true, length: { in: (5..200) }
-
-  def upvote user
-    self.upvotes.create(user: user)
-  end
 end
-
