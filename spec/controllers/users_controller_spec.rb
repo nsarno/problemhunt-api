@@ -6,25 +6,6 @@ RSpec.describe UsersController, :type => :controller do
     controller.stub(:authenticate) { @current_user }
   end
 
-  describe 'GET #index' do
-    it 'requires authentication' do
-      controller.unstub(:authenticate)
-      get :index
-      expect(response.status).to eq(401)
-    end
-
-    it 'responds with success' do
-      get :index
-      expect(response.status).to eq(200)
-    end
-
-    it 'returns a JSON with the users' do
-      create :user
-      get :index
-      expect(json).to have_key('users')
-    end
-  end
-
   describe 'GET #show' do
     it 'requires authentication' do
       controller.unstub(:authenticate)
@@ -58,12 +39,6 @@ RSpec.describe UsersController, :type => :controller do
   end
   
   describe 'POST #create' do
-    it 'requires authentication' do
-      controller.unstub(:authenticate)
-      post :create, user: attributes_for(:user)
-      expect(response.status).to eq(401)
-    end
-
     context 'with valid attributes' do
       before :each do
         post :create, user: attributes_for(:user)

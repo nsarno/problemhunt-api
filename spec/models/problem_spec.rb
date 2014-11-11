@@ -6,7 +6,7 @@ RSpec.describe Problem, :type => :model do
   it { is_expected.to be_valid }
 
   it 'validates organization ref presence' do
-    expect(build :problem, organization: nil).to be_invalid
+    expect(build :problem, room: nil).to be_invalid
   end
 
   it 'validates description presence' do

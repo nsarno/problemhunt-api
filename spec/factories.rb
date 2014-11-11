@@ -5,18 +5,18 @@ FactoryGirl.define do
     password 'secret'
   end
 
-  factory :organization do
-    sequence(:name) { |n| "company-#{n}" }
+  factory :room do
+    sequence(:name) { |n| "room-#{n}" }
   end
 
   factory :problem do
-    organization
     description "Spiders! Spiders everywhere!"
+    association :room, factory: :room
   end
 
   factory :upvote do
-    problem
-    user
+    association :problem, factory: :problem
+    association :user, factory: :user
   end
 end
 

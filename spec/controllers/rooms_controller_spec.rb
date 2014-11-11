@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OrganizationsController, :type => :controller do
+RSpec.describe RoomsController, :type => :controller do
 
   before(:each) do
     @current_user = create :user

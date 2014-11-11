@@ -16,22 +16,22 @@ ActiveRecord::Schema.define(version: 20141026095758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "organizations", force: true do |t|
+  create_table "problems", force: true do |t|
+    t.string   "description"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "problems", ["room_id"], name: "index_problems_on_room_id", using: :btree
+
+  create_table "rooms", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
-
-  create_table "problems", force: true do |t|
-    t.string   "description"
-    t.integer  "organization_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "problems", ["organization_id"], name: "index_problems_on_organization_id", using: :btree
+  add_index "rooms", ["name"], name: "index_rooms_on_name", unique: true, using: :btree
 
   create_table "upvotes", force: true do |t|
     t.integer  "problem_id"

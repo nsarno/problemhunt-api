@@ -1,9 +1,5 @@
 class UsersController < ApplicationController
- before_filter :authenticate
-
-  def index
-    render json: User.all
-  end
+ before_filter :authenticate, except: [:create]
 
   def show
     render json: User.find(params[:id])
