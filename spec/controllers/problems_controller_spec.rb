@@ -13,12 +13,13 @@ RSpec.describe ProblemsController, :type => :controller do
   describe "POST create" do
     it 'requires authentication' do
       controller.unstub(:authenticate)
-      post :create, problem: attributes_for(:problem).merge(room: room)
+      controller.unstub(:current_user)
+      post :create, room_id: room.id, problem: attributes_for(:problem)
       expect(response.status).to eq(401)
     end
 
     it "responds with success" do
-      post :create, problem: attributes_for(:problem).merge(room_id: room.id)
+      post :create, room_id: room.id, problem: attributes_for(:problem)
       expect(response.status).to be(201)
     end
   end

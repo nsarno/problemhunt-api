@@ -1,6 +1,11 @@
 class RoomsController < ApplicationController
   before_filter :authenticate
 
+  # GET /rooms
+  def index
+    render json: Room.all
+  end
+
   # POST /rooms
   def create
     @room = Room.new(room_params)
