@@ -18,6 +18,15 @@ RSpec.describe RoomsController, :type => :controller do
       get :index
       expect(response.status).to eq(200)
     end
+
+    it 'can be filtered by name' do
+      room1 = create :room
+      room2 = create :room
+      get :index, { name: room1.name }
+      results = json['rooms']
+      expect(results.count).to eq(1)
+      expect(results.first['name']).to eq(room1.name)
+    end
   end
 
 end

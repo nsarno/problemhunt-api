@@ -3,7 +3,16 @@ class RoomsController < ApplicationController
 
   # GET /rooms
   def index
-    render json: Room.all
+    if params[:name]
+      render json: Room.where(name: params[:name])
+    else
+      render json: Room.all
+    end
+  end
+
+  # GET /rooms/:id
+  # GET /rooms/:name
+  def show
   end
 
   # POST /rooms
