@@ -12,10 +12,14 @@ private
   end
 
   def authenticate
+    logger.debug "AUTHENTICATE"
     begin
       token = request.headers['Authorization'].split(' ').last
       payload, header = AuthToken.valid?(token)
       @current_user = User.find_by(id: payload['user_id'])
+      logger.debug "CURRENT_USER"
+      logger.debug @current_user
+      logger.debug payload['user_id']
     rescue
       head :unauthorized
     end
