@@ -16,4 +16,10 @@ RSpec.describe User, :type => :model do
   it 'validates uniqueness of email' do
     expect(build :user, email: subject.email).to be_invalid
   end
+
+  it 'has and belongs to many rooms' do
+    expect(user.rooms.count).to eq(0)
+    user.rooms << create(:room)
+    expect(user.rooms.count).to eq(1)
+  end
 end

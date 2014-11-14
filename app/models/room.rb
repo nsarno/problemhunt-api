@@ -1,8 +1,9 @@
 class Room < ActiveRecord::Base
-  # Validations
-  validates :name, presence: true, uniqueness: true
-
   # Associations
   has_many :problems
-  has_and_belongs_to_many :users
+  has_many :registrations
+  has_many :users, through: :registrations
+
+  # Validations
+  validates :name, presence: true, uniqueness: true
 end

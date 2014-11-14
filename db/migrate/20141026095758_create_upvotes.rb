@@ -1,6 +1,10 @@
 class CreateUpvotes < ActiveRecord::Migration
   def change
-    create_join_table :problems, :users, table_name: :upvotes do |t|
+    create_table :upvotes do |t|
+      t.belongs_to :problem
+      t.belongs_to :user
+      t.timestamps
+
       t.index [:problem_id, :user_id], unique: true
     end
   end

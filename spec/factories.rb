@@ -18,5 +18,9 @@ FactoryGirl.define do
     association :problem, factory: :problem
     association :user, factory: :user
   end
-end
 
+  factory :registration do
+    association :user, factory: :user
+    association :room, factory: :room
+  end
+end

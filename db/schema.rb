@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114171507) do
+ActiveRecord::Schema.define(version: 20141114192115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20141114171507) do
 
   add_index "problems", ["room_id"], name: "index_problems_on_room_id", using: :btree
 
+  create_table "registrations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["user_id", "room_id"], name: "index_registrations_on_user_id_and_room_id", unique: true, using: :btree
+
   create_table "rooms", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -33,16 +42,11 @@ ActiveRecord::Schema.define(version: 20141114171507) do
 
   add_index "rooms", ["name"], name: "index_rooms_on_name", unique: true, using: :btree
 
-  create_table "rooms_users", id: false, force: true do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
-  end
-
-  add_index "rooms_users", ["user_id", "room_id"], name: "index_rooms_users_on_user_id_and_room_id", unique: true, using: :btree
-
-  create_table "upvotes", id: false, force: true do |t|
-    t.integer "problem_id", null: false
-    t.integer "user_id",    null: false
+  create_table "upvotes", force: true do |t|
+    t.integer  "problem_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "upvotes", ["problem_id", "user_id"], name: "index_upvotes_on_problem_id_and_user_id", unique: true, using: :btree
