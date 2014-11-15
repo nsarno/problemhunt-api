@@ -5,11 +5,12 @@ class ProblemsController < ApplicationController
 
   # POST /rooms/:id/problems
   def create
-    @problem = @room.problems.new(problem_params)
-    if @problem.save && current_user.upvotes(@problem)
-      render json: @problem, status: :created, location: room_problem_url(@room, @problem)
+    problem = @room.problems.new(problem_params)
+
+    if problem.save && current_user.upvotes(problem)
+      render json: problem, status: :created, location: room_problem_url(@room, problem)
     else
-      render json: @problem.errors, status: :unprocessable_entity
+      render json: problem.errors, status: :unprocessable_entity
     end
   end
 

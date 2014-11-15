@@ -1,14 +1,20 @@
 class RegistrationsController < ApplicationController
   before_filter :authenticate
   before_filter :set_room
+  before_filter :set_registration, only: [:destroy]
 
   def create
-    current_user.rooms << @room
-    head :created
+    registration = @room.registrations.new(registration_params)
+
+    if registration.save
+      render json: registration, status: :created, location: room_registration_url(@room, registration)
+    else
+      render json: registration.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @room.destroy
+    @registration.destroy
     head :no_content
   end
 
@@ -16,5 +22,13 @@ private
 
   def set_room
     @room = Room.find(params[:room_id])
+  end
+
+  def set_registration
+    @registration = @room.registrations.find(params[:id])
+  end
+
+  def registration_params
+    params.require(:registration).permit(:user_id)
   end
 end
