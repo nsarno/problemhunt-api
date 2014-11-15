@@ -1,6 +1,8 @@
 class ProblemSerializer < ActiveModel::Serializer
   attributes :id, :description, :upvote_count, :upvoted, :upvote_id
 
+  delegate :current_user, to: :scope
+
   def upvote_count 
     object.upvotes.count
   end

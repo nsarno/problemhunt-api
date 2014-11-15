@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
   def upvotes problem
     problem.upvotes.create(user: self)
   end
+
+  def registered? room
+    self.rooms.include? room
+  end
 end

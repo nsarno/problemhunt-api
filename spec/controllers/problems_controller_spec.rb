@@ -6,8 +6,9 @@ RSpec.describe ProblemsController, :type => :controller do
 
   before(:each) do
     @current_user = create :user
-    controller.stub(:authenticate) { @current_user }
+    controller.stub(:authenticate)
     controller.stub(:current_user) { @current_user }
+    ProblemSerializer.any_instance.stub(scope: controller)
   end
 
   describe 'POST create' do

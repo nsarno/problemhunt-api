@@ -1,7 +1,9 @@
 class RoomsController < ApplicationController
   before_filter :authenticate
+  before_filter :set_room, only: [:show]
 
   # GET /rooms
+  # GET /rooms?name=param
   def index
     if params[:name]
       render json: Room.where(name: params[:name])
@@ -11,8 +13,8 @@ class RoomsController < ApplicationController
   end
 
   # GET /rooms/:id
-  # GET /rooms/:name
   def show
+    render json: @room
   end
 
   # POST /rooms
@@ -27,6 +29,10 @@ class RoomsController < ApplicationController
   end
 
 private
+
+  def set_room
+    @room = Room.find(params[:id])
+  end
 
   def room_params
     params.require(:room).permit(:name)

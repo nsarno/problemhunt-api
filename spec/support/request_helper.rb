@@ -5,4 +5,3 @@ module Requests
     end
   end
 end
-

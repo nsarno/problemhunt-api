@@ -1,6 +1,15 @@
 class RoomSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :registered, :followers_count
 
   has_many :problems
-end
 
+  delegate :current_user, to: :scope
+
+  def registered
+    current_user.registered? object
+  end
+
+  def followers_count
+    object.users.count
+  end
+end
