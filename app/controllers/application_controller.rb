@@ -23,6 +23,7 @@ private
       token = request.headers['Authorization'].split(' ').last
       payload, header = AuthToken.valid?(token)
       @current_user = User.find_by(id: payload['user_id'])
+      User.current = @current_user
     rescue
       head :unauthorized
     end

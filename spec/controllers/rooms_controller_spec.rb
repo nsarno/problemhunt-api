@@ -6,9 +6,8 @@ RSpec.describe RoomsController, :type => :controller do
 
   before(:each) do
     @current_user = create :user
-    controller.stub(:authenticate) { @current_user }
+    controller.stub(:authenticate) { User.current = @current_user }
     controller.stub(:current_user) { @current_user }
-    RoomSerializer.any_instance.stub(scope: controller)
   end
 
   describe 'GET #index' do

@@ -3,10 +3,8 @@ class RoomSerializer < ActiveModel::Serializer
 
   has_many :problems
 
-  delegate :current_user, to: :scope
-
   def registered
-    current_user.registered? object
+    User.current.registered? object
   end
 
   def followers_count
