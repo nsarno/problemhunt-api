@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   before_filter :set_registration, only: [:destroy]
 
   def create
-    registration = @room.registrations.new(registration_params)
+    registration = @room.registrations.new(user: current_user)
 
     if registration.save
       render json: registration, status: :created, location: room_registration_url(@room, registration)
@@ -25,10 +25,6 @@ private
   end
 
   def set_registration
-    @registration = @room.registrations.find(params[:id])
-  end
-
-  def registration_params
-    params.require(:registration).permit(:user_id)
+    @registration = current_user.registrations.find(params[:id])
   end
 end

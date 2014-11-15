@@ -15,12 +15,12 @@ FactoryGirl.define do
   end
 
   factory :upvote do
-    association :problem, factory: :problem
-    association :user, factory: :user
+    problem
+    user
   end
 
   factory :registration do
-    association :user, factory: :user
-    association :room, factory: :room
+    user
+    room
   end
 end
