@@ -7,11 +7,13 @@ FactoryGirl.define do
 
   factory :room do
     sequence(:name) { |n| "room-#{n}" }
+    topic 'What are the main problems at StartupBus'
+    association :owner, factory: :user
   end
 
   factory :problem do
-    description "Spiders! Spiders everywhere!"
-    association :room, factory: :room
+    description 'Not enough internet'
+    room
   end
 
   factory :upvote do

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, :type => :controller do
+
+  let(:user) { create :user }
+
   before(:each) do
     @current_user = create :user
     controller.stub(:authenticate) { @current_user }
@@ -60,7 +63,7 @@ RSpec.describe UsersController, :type => :controller do
         post :create, user: attributes_for(:user, email: nil)
       end
 
-      it 'respond with unprocessabe_entity' do
+      it 'respond with unprocessabe entity' do
         expect(response.status).to eq(422)
       end
 
@@ -85,8 +88,8 @@ RSpec.describe UsersController, :type => :controller do
 
     context 'with valid attributes' do
       before :each do
-        @user = create(:user)
-        put :update, id: @user, user: attributes_for(:user)
+        put :update, id: user, user: attributes_for(:user, email: 'foo@bar.com')
+        user.reload
       end
 
       it 'responds with success' do
@@ -94,16 +97,14 @@ RSpec.describe UsersController, :type => :controller do
       end
 
       it 'saves the changes in database' do
-        put :update, id: @user, user: attributes_for(:user, email: 'foo@bar.com')
-        @user.reload
-        expect(@user.email).to eq('foo@bar.com')
+        expect(user.email).to eq('foo@bar.com')
       end
     end
 
     context 'with invalid attributes' do
       before :each do
-        @user = create(:user)
-        put :update, id: @user, user: attributes_for(:user, email: nil)
+        put :update, id: user, user: attributes_for(:user, email: nil)
+        user.reload
       end
 
       it 'responds with unprocessabe_entity' do
@@ -111,8 +112,7 @@ RSpec.describe UsersController, :type => :controller do
       end
 
       it 'does not save the changes in database' do
-        @user.reload
-        expect(@user.email).to_not eq(nil)
+        expect(user.email).to_not eq(nil)
       end
 
       it 'renders errors' do

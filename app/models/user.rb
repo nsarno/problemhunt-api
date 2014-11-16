@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   # Associations
   has_many :registrations
   has_many :rooms, through: :registrations
+  has_many :owned_rooms, class_name: 'Room', foreign_key: :owner_id
 
   # Validations  
   validates :email, presence: true, uniqueness: true

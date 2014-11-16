@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20141114192115) do
 
   create_table "rooms", force: true do |t|
     t.string   "name"
+    t.string   "topic"
+    t.integer  "owner_id",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
