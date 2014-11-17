@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   resources :auth, only: [:create]
   resources :users, except: [:new, :edit]
 
-  resources :rooms, except: [:new, :edit] do
+  resources :rooms, except: [:new, :edit], shallow: true do
     resources :registrations, only: [:create, :destroy]
-    resources :problems, except: [:new, :edit]
+    resources :problems, except: [:new, :edit] do
+      resources :upvotes, only: [:create, :destroy]
+    end
   end
-
-  resources :upvotes, only: [:create, :destroy]
 end

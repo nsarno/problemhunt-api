@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
     registration = @room.registrations.new(user: current_user)
 
     if registration.save
-      render json: registration, status: :created, location: room_registration_url(@room, registration)
+      render json: registration, status: :created, location: registration
     else
       render json: registration.errors, status: :unprocessable_entity
     end

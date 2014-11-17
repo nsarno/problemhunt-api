@@ -8,7 +8,7 @@ RSpec.describe RegistrationsController, :type => :routing do
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/rooms/1/registrations/1").to route_to("registrations#destroy", room_id: "1", id: "1")
+      expect(:delete => "/registrations/1").to route_to("registrations#destroy", id: "1")
     end
 
   end

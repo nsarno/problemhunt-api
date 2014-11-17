@@ -9,7 +9,7 @@ class ProblemsController < ApplicationController
     problem = current_user.problems.new problem_params.merge(room_id: @room.id)
 
     if problem.save
-      render json: problem, status: :created, location: room_problem_url(@room, problem)
+      render json: problem, status: :created, location: problem
     else
       render json: problem.errors, status: :unprocessable_entity
     end

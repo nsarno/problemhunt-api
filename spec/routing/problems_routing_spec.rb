@@ -8,7 +8,7 @@ RSpec.describe ProblemsController, :type => :routing do
     end
 
     it "routes to #show" do
-      expect(:get => "/rooms/1/problems/1").to route_to("problems#show", room_id: "1", id: "1")
+      expect(:get => "/problems/1").to route_to("problems#show", id: "1")
     end
 
     it "routes to #create" do
@@ -16,11 +16,11 @@ RSpec.describe ProblemsController, :type => :routing do
     end
 
     it "routes to #update" do
-      expect(:put => "/rooms/1/problems/1").to route_to("problems#update", room_id: "1", id: "1")
+      expect(:put => "/problems/1").to route_to("problems#update", id: "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/rooms/1/problems/1").to route_to("problems#destroy", room_id: "1", id: "1")
+      expect(:delete => "/problems/1").to route_to("problems#destroy", id: "1")
     end
 
   end
