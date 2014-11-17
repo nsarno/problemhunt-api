@@ -1,5 +1,9 @@
 class ProblemSerializer < ActiveModel::Serializer
-  attributes :id, :description, :upvote_count, :upvoted, :upvote_id
+  attributes :id, :description, :upvote_count, :upvoted, :upvote_id, :author?
+
+  def author?
+    User.current.problems.include? object
+  end
 
   def upvote_count 
     object.upvotes.count

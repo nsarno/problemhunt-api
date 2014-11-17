@@ -1,3 +1,4 @@
+require 'pp'
 class ProblemsController < ApplicationController
   before_filter :authenticate
   before_filter :set_room
@@ -5,9 +6,9 @@ class ProblemsController < ApplicationController
 
   # POST /rooms/:id/problems
   def create
-    problem = @room.problems.new(problem_params)
+    problem = current_user.problems.new problem_params.merge(room_id: @room.id)
 
-    if problem.save && problem.upvotes.create(user: current_user)
+    if problem.save
       render json: problem, status: :created, location: room_problem_url(@room, problem)
     else
       render json: problem.errors, status: :unprocessable_entity
