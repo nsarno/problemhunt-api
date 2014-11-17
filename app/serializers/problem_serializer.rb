@@ -1,5 +1,5 @@
 class ProblemSerializer < ActiveModel::Serializer
-  attributes :id, :description, :upvotes_count, :upvoted, :upvote_id, :author?
+  attributes :id, :description, :upvotes_count, :upvoted?, :author?
 
   def author?
     User.current.problems.include? object
@@ -9,12 +9,13 @@ class ProblemSerializer < ActiveModel::Serializer
     object.upvotes.count
   end
 
-  def upvoted
+  def upvoted?
     object.upvotes.where(user: User.current).any?
   end
 
-  def upvote_id
-    upv = object.upvotes.where(user: User.current).first
-    upv.nil? ? 0 : upv.id
+  def attributes
+    data = super
+    data[:upvote_id] = object.upvotes.where(user: User.current).first.id if upvoted?
+    data
   end
 end
