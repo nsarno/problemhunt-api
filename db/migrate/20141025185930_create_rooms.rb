@@ -3,7 +3,7 @@ class CreateRooms < ActiveRecord::Migration
     create_table :rooms do |t|
       t.string :name
       t.string :topic
-      t.references :owner, null: false
+      t.references :owner, null: false, index: true
 
       t.timestamps
     end

@@ -1,5 +1,5 @@
 class RoomSerializer < ActiveModel::Serializer
-  attributes :id, :name, :registered?, :followers_count
+  attributes :id, :name, :registered?, :followers_count, :owner?
 
   has_many :problems
 
@@ -7,6 +7,10 @@ private
 
   def registered?
     User.current.registered? object
+  end
+
+  def owner?
+    User.current.owner? object
   end
 
   def followers_count

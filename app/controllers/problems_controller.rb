@@ -7,7 +7,7 @@ class ProblemsController < ApplicationController
   def create
     problem = @room.problems.new(problem_params)
 
-    if problem.save && current_user.upvotes(problem)
+    if problem.save && problem.upvotes.create(user: current_user)
       render json: problem, status: :created, location: room_problem_url(@room, problem)
     else
       render json: problem.errors, status: :unprocessable_entity
@@ -27,7 +27,7 @@ private
   end
 
   def set_problem
-    @problem = @room.problems.find(params[:id])
+    @problem = current_user.problems.find(params[:id])
   end
 
   def problem_params

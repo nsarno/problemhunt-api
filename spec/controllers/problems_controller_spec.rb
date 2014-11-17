@@ -14,12 +14,12 @@ RSpec.describe ProblemsController, :type => :controller do
   describe 'POST create' do
     it 'requires authentication' do
       controller.unstub(:authenticate)
-      post :create, room_id: room.id, problem: attributes_for(:problem)
+      post :create, room_id: room.id, problem: attributes_for(:problem, user: @current_user)
       expect(response.status).to eq(401)
     end
 
     it 'responds with success' do
-      post :create, room_id: room.id, problem: attributes_for(:problem)
+      post :create, room_id: room.id, problem: attributes_for(:problem, user: @current_user)
       expect(response.status).to be(201)
     end
   end
@@ -32,9 +32,15 @@ RSpec.describe ProblemsController, :type => :controller do
     end
 
     it 'responds with success' do
-      problem = create :problem 
+      problem = create :problem, user: @current_user
       delete :destroy, room_id: problem.room.id, id: problem.id
       expect(response.status).to be(204)
+    end
+
+    it 'only destroys problem from current user' do
+      problem = create :problem
+      delete :destroy, room_id: problem.room.id, id: problem.id
+      expect(response.status).to be(404)
     end
   end
 end

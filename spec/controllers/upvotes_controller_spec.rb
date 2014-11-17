@@ -1,4 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe UpvotesController, :type => :controller do
+  let(:problem) { create :problem }
+
+  before(:each) do
+    @current_user = create :user
+    controller.stub(:authenticate) { @current_user }
+    controller.stub(:current_user) { @current_user }
+  end
+
+  describe 'POST create' do
+    it 'requires authentication' do
+      controller.unstub(:authenticate)
+      post :create, problem_id: problem.id
+      expect(response.status).to eq(401)
+    end
+
+    it 'responds with success' do
+      post :create, problem_id: problem.id
+      expect(response.status).to be(201)
+    end
+  end
+
+  describe 'DELETE create' do
+    it 'requires authentication' do
+      controller.unstub(:authenticate)
+      delete :destroy, problem_id: problem.id, id: 1
+      expect(response.status).to eq(401)
+    end
+
+    it 'responds with success' do
+      upvote = create :upvote, user: @current_user, problem: problem
+      delete :destroy, problem_id: problem.id, id: upvote.id
+      expect(response.status).to be(204)
+    end
+  end
+
 end

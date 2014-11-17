@@ -13,6 +13,7 @@ FactoryGirl.define do
 
   factory :problem do
     description 'Not enough internet'
+    user
     room
   end
 
