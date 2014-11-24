@@ -17,4 +17,10 @@ RSpec.describe Problem, :type => :model do
     expect(build :problem, description: 'a' * 201).to be_invalid
     expect(build :problem, description: 'a' * 4).to be_invalid
   end
+
+  it 'destroys the dependent upvotes' do
+    upvote = create(:upvote, problem: problem)
+    problem.destroy
+    expect(Upvote.find_by(id: upvote.id)).to be(nil)
+  end
 end

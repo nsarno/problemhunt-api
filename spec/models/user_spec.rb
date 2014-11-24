@@ -28,4 +28,28 @@ RSpec.describe User, :type => :model do
     user.owned_rooms.create(attributes_for(:room))
     expect(user.owned_rooms.count).to eq(1)
   end
+
+  it 'destroys the dependent registrations' do
+    registration = create(:registration, user: user)
+    user.destroy
+    expect(Registration.find_by(id: registration.id)).to be(nil)
+  end
+
+  it 'destroys the dependent owned rooms' do
+    room = create(:room, owner: user)
+    user.destroy
+    expect(Room.find_by(id: room.id)).to be(nil)
+  end
+
+  it 'destroys the dependent problems' do
+    problem = create(:problem, user: user)
+    user.destroy
+    expect(Problem.find_by(id: problem.id)).to be(nil)
+  end
+
+  it 'destroys the dependent upvotes' do
+    upvote = create(:upvote, user: user)
+    user.destroy
+    expect(Upvote.find_by(id: upvote.id)).to be(nil)
+  end
 end

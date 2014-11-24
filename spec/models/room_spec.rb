@@ -29,4 +29,11 @@ RSpec.describe Room, :type => :model do
     room = user.owned_rooms.create attributes_for(:room)
     expect(room.owner.id).to eq(user.id)
   end
+
+  it 'destroys the dependent problems' do
+    problem = create(:problem)
+    room.problems << problem
+    room.destroy
+    expect(Problem.find_by(id: problem.id)).to be(nil)
+  end
 end
