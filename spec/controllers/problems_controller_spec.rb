@@ -11,6 +11,24 @@ RSpec.describe ProblemsController, :type => :controller do
     ProblemSerializer.any_instance.stub(scope: controller)
   end
 
+  describe 'GET index' do
+    it 'requires authentication' do
+      controller.unstub(:authenticate)
+      get :index, room_id: room.id
+      expect(response.status).to eq(401)
+    end
+
+    it 'responds with success' do
+      get :index, room_id: room.id
+      expect(response.status).to eq(200)
+    end
+
+    it 'has key problems in json response' do
+      get :index, room_id: room.id
+      expect(json).to have_key('problems')
+    end
+  end
+
   describe 'POST create' do
     it 'requires authentication' do
       controller.unstub(:authenticate)

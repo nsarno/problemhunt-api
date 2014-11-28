@@ -1,7 +1,12 @@
 class ProblemsController < ApplicationController
   before_filter :authenticate
-  before_filter :set_room
+  before_filter :set_room, only: [:index, :create]
   before_filter :set_problem, only: [:destroy]
+
+  # GET /rooms/:id/problems
+  def index
+    render json: @room.problems
+  end
 
   # POST /rooms/:id/problems
   def create
@@ -14,7 +19,7 @@ class ProblemsController < ApplicationController
     end
   end
 
-  # DELETE /rooms/:id/problems/:id
+  # DELETE /problems/:id
   def destroy
     @problem.destroy
     head :no_content
