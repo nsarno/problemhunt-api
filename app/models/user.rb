@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  cattr_accessor :current
+  mattr_accessor :current
 
   has_secure_password
 
