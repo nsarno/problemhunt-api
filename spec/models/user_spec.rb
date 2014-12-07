@@ -52,4 +52,18 @@ RSpec.describe User, :type => :model do
     user.destroy
     expect(Upvote.find_by(id: upvote.id)).to be(nil)
   end
+
+  it 'know if it is registered for a given room' do
+    room = create(:room)
+    expect(user.registered? room).to eq(false)
+    room.users << user
+    expect(user.registered? room).to eq(true)
+  end
+
+  it 'finds the registration for a given room' do
+    room = create(:room)
+    expect { user.registration_for(room) }.to raise_error(ActiveRecord::RecordNotFound)
+    room.users << user
+    expect { user.registration_for(room) }.not_to raise_error
+  end
 end

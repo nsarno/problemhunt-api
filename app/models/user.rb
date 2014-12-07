@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     self.rooms.include? room
   end
 
+  def registration_for room
+    self.rooms.find room.id
+  end
+
   def owner? room
     self.owned_rooms.include? room
   end
