@@ -32,7 +32,7 @@ RSpec.describe RegistrationsController, :type => :controller do
 
     it 'responds with success' do
       registration = create :registration, user: @current_user, room: room
-      delete :destroy, room_id: room.id, id: registration.id
+      delete :destroy, id: registration.id
       expect(response.status).to be(204)
     end
   end

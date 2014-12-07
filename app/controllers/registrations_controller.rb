@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   before_filter :authenticate
-  before_filter :set_room
+  before_filter :set_room, only: [:create]
   before_filter :set_registration, only: [:destroy]
 
   def create
