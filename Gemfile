@@ -48,5 +48,5 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem "codeclimate-test-reporter", require: nil
 end
-
