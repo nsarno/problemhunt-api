@@ -34,6 +34,7 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers', br
 
 # Monitor usign New Relic
 gem 'newrelic_rpm'
+gem 'rails-api-newrelic'
 
 group :development, :test do
   gem 'rspec-rails'
