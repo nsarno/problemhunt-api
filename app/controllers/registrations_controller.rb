@@ -4,13 +4,7 @@ class RegistrationsController < ApplicationController
   before_filter :set_registration, only: [:destroy]
 
   def create
-    registration = @room.registrations.new(user: current_user)
-
-    if registration.save
-      render json: registration, status: :created, location: registration
-    else
-      render json: registration.errors, status: :unprocessable_entity
-    end
+    save_and_render @room.registrations.new(user: current_user)
   end
 
   def destroy

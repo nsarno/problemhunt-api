@@ -20,13 +20,7 @@ class RoomsController < ApplicationController
 
   # POST /rooms
   def create
-    @room = current_user.owned_rooms.new(room_params)
-
-    if @room.save
-      render json: @room, status: :created, location: @room
-    else
-      render json: @room.errors, status: :unprocessable_entity
-    end
+    save_and_render current_user.owned_rooms.new(room_params)
   end
 
   # PUT/PATCH /rooms/:id

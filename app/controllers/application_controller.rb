@@ -29,5 +29,13 @@ private
     end
   end
 
+  def save_and_render resource
+    if resource.save
+      render json: resource, status: :created, location: resource
+    else
+      render json: resource.errors, status: :unprocessable_entity
+    end
+  end
+
   helper_method :authenticate
 end

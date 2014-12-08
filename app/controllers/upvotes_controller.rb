@@ -5,13 +5,7 @@ class UpvotesController < ApplicationController
 
   # POST /upvotes
   def create
-    upvote = @problem.upvotes.new(user: current_user)
-
-    if upvote.save
-      render json: upvote, status: :created, location: upvote
-    else
-      render json: upvote.errors, status: :unprocessable_entity
-    end
+    save_and_render @problem.upvotes.new(user: current_user)
   end
 
   # DELETE /upvotes/:id
