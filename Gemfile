@@ -36,6 +36,9 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers', br
 gem 'newrelic_rpm'
 gem 'rails-api-newrelic'
 
+# Simple rails app configuration (used to keep secrets in open source repo)
+gem 'figaro'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'meta_request'
