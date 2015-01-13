@@ -4,16 +4,33 @@ RSpec.describe UsersController, :type => :controller do
 
   let(:user) { create :user }
 
-  before(:each) do
-    @current_user = create :user
-    controller.stub(:authenticate) { @current_user }
+  before :each do
+    controller.stub(:authenticate) { create :user }
   end
 
   describe 'GET #show' do
-    it 'requires authentication' do
-      controller.unstub(:authenticate)
-      get :show, id: 42
-      expect(response.status).to eq(401)
+    context 'with unstubbed authentication and valid token' do
+      before :each do
+        controller.unstub(:authenticate)
+        controller.request.env['HTTP_AUTHORIZATION'] = AuthToken.issue_token({ user_id: user.id })
+      end
+
+      it 'responds with success' do
+        get :show, id: user.id
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'with unstubbed authentication and invalid token' do
+      before :each do
+        controller.unstub(:authenticate)
+        controller.request.env['HTTP_AUTHORIZATION'] = "invalid token"
+      end
+
+      it 'requires a valid token' do
+        get :show, id: user.id
+        expect(response.status).to eq(401)
+      end
     end
 
     context 'with valid id' do

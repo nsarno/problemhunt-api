@@ -6,12 +6,6 @@ class ApplicationController < ActionController::API
     head :ok
   end
 
-  def current_user
-    @current_user
-  end
-
-  helper_method :current_user
-
 private
 
   def not_found
@@ -22,11 +16,15 @@ private
     begin
       token = request.headers['Authorization'].split(' ').last
       payload, header = AuthToken.valid?(token)
-      @current_user = User.find_by(id: payload['user_id'])
+      @current_user = User.find(payload['user_id'])
       User.current = @current_user
     rescue
       head :unauthorized
     end
+  end
+
+  def current_user
+    @current_user
   end
 
   def save_and_render resource
@@ -37,5 +35,6 @@ private
     end
   end
 
+  helper_method :current_user
   helper_method :authenticate
 end
