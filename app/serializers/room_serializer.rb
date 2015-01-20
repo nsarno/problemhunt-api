@@ -1,30 +1,23 @@
 class RoomSerializer < ActiveModel::Serializer
   attributes :id, :name, :registered?, :registration_id, :followers_count, :owner?
-
   has_many :problems
 
 private
 
   def registered?
-    User.current.registered? object
+    object.has_follower? User.current
   end
 
   def registration_id
     return 0 unless registered?
-    User.current.registration_for(object).id
+    object.registration_for(User.current).id
   end
 
   def owner?
-    User.current.owner? object
+    object.owner == User.current
   end
 
   def followers_count
-    object.users.count
-  end
-
-  def attributes
-    data = super
-    data[:registration_id] = object.registrations.where(user: User.current).first.id if registered?
-    data
+    object.users.length
   end
 end

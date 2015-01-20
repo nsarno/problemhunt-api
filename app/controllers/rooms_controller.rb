@@ -6,10 +6,11 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms?name=param
   def index
+    rooms = Room.includes(:problems, :registrations, :users, :owner)
     if params[:name]
-      render json: Room.where(name: params[:name])
+      render json: rooms.where(name: params[:name])
     else
-      render json: Room.all
+      render json: rooms
     end
   end
 
