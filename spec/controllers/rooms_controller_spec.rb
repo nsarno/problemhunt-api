@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe RoomsController, :type => :controller do
 
-  let(:user) { create :user }
-  let(:room) { create :room, owner: user }
+  let(:current_user) { create :user }
+  let(:room) { create :room, owner: current_user }
   let(:not_my_room) { create :room }
 
   before(:each) do
-    controller.stub(:authenticate) { User.current = user }
-    controller.stub(:current_user) { user }
+    controller.stub(:authenticate) { current_user }
+    controller.stub(:current_user) { current_user }
   end
 
   describe 'GET #index' do

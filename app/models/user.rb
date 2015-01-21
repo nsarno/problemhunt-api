@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  mattr_accessor :current
-
   has_secure_password
 
   # Associations

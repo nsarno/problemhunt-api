@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.describe ProblemsController, :type => :controller do
 
+  let(:current_user) { create :user }
   let(:room) { create :room }
 
   before(:each) do
-    @current_user = create :user
-    controller.stub(:authenticate) { User.current = @current_user }
-    controller.stub(:current_user) { @current_user }
-    ProblemSerializer.any_instance.stub(scope: controller)
+    controller.stub(:authenticate)
+    controller.stub(:current_user) { current_user }
   end
 
   describe 'GET index' do
@@ -32,12 +31,12 @@ RSpec.describe ProblemsController, :type => :controller do
   describe 'POST create' do
     it 'requires authentication' do
       controller.unstub(:authenticate)
-      post :create, room_id: room.id, problem: attributes_for(:problem, user: @current_user)
+      post :create, room_id: room.id, problem: attributes_for(:problem, user: current_user)
       expect(response.status).to eq(401)
     end
 
     it 'responds with success' do
-      post :create, room_id: room.id, problem: attributes_for(:problem, user: @current_user)
+      post :create, room_id: room.id, problem: attributes_for(:problem, user: current_user)
       expect(response.status).to be(201)
     end
   end
@@ -50,7 +49,7 @@ RSpec.describe ProblemsController, :type => :controller do
     end
 
     it 'responds with success' do
-      problem = create :problem, user: @current_user
+      problem = create :problem, user: current_user
       delete :destroy, room_id: problem.room.id, id: problem.id
       expect(response.status).to be(204)
     end

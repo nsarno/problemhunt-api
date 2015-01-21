@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  serialization_scope :view_context
 
   def index
     head :ok
@@ -17,7 +16,6 @@ private
       token = request.headers['Authorization'].split(' ').last
       payload, header = AuthToken.valid?(token)
       @current_user = User.find(payload['user_id'])
-      User.current = @current_user
     rescue
       head :unauthorized
     end

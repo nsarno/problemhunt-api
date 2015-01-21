@@ -50,6 +50,6 @@ private
   end
 
   def room_params
-    params.require(:room).permit(:name)
+    params.require(:room).permit(:name, :topic)
   end
 end

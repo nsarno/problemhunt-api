@@ -5,16 +5,16 @@ class RoomSerializer < ActiveModel::Serializer
 private
 
   def registered?
-    object.has_follower? User.current
+    object.has_follower? scope
   end
 
   def registration_id
     return 0 unless registered?
-    object.registration_for(User.current).id
+    object.registration_for(scope).id
   end
 
   def owner?
-    object.owner == User.current
+    object.owner == scope
   end
 
   def followers_count
