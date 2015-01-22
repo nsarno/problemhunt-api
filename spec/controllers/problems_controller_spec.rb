@@ -18,10 +18,6 @@ RSpec.describe ProblemsController, :type => :controller do
     end
 
     it 'responds with success' do
-      5.times do
-        pb = create :problem, room: room
-        create :upvote, problem: pb
-      end
       get :index, room_id: room.id
       expect(response.status).to eq(200)
     end
