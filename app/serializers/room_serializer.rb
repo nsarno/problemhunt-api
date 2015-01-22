@@ -9,8 +9,7 @@ private
   end
 
   def registration_id
-    return 0 unless registered?
-    object.registration_for(scope).id
+    registered? ? object.registration_for(scope).id : 0
   end
 
   def owner?

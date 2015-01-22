@@ -2,19 +2,18 @@ class ProblemSerializer < ActiveModel::Serializer
   attributes :id, :description, :upvotes_count, :upvoted?, :upvote_id, :author?
 
   def author?
-    object.user == scope
+    object.created_by? scope
   end
 
   def upvotes_count
-    object.upvotes.count
+    object.upvotes.length
   end
 
   def upvoted?
-    object.upvotes.where(user: scope).any?
+    object.upvoted_by? scope
   end
 
   def upvote_id
-    return 0 unless upvoted?
-    object.upvotes.where(user: scope).first.id
+    upvoted? ? object.upvote_for(scope).id : 0
   end
 end

@@ -5,7 +5,7 @@ class ProblemsController < ApplicationController
 
   # GET /rooms/:id/problems
   def index
-    render json: @room.problems
+    render json: @room.problems.includes(:user, upvotes: :user)
   end
 
   # POST /rooms/:id/problems
