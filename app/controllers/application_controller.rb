@@ -25,9 +25,9 @@ private
     @current_user
   end
 
-  def save_and_render resource
+  def save_and_render resource, location=false
     if resource.save
-      render json: resource, status: :created, location: resource
+      render json: resource, status: :created, location: location != false ? location : resource
     else
       render json: resource.errors, status: :unprocessable_entity
     end

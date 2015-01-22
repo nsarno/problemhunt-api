@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   resources :rooms, except: [:new, :edit], shallow: true do
     resources :registrations, only: [:create, :destroy]
     resources :problems, except: [:new, :edit] do
-      resources :upvotes, only: [:create, :destroy]
+      member do
+        post :upvote, to: 'upvotes#create'
+        delete :downvote, to: 'upvotes#destroy'
+      end
     end
   end
 end

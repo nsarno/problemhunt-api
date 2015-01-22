@@ -1,14 +1,14 @@
 class UpvotesController < ApplicationController
   before_filter :authenticate
-  before_filter :set_problem, only: [:create]
+  before_filter :set_problem, only: [:create, :destroy]
   before_filter :set_upvote, only: [:destroy]
 
-  # POST /upvotes
+  # POST /problems/:id/upvote
   def create
-    save_and_render @problem.upvotes.new(user: current_user)
+    save_and_render @problem.upvotes.new(user: current_user), @problem
   end
 
-  # DELETE /upvotes/:id
+  # DELETE /problems/:id/downvote
   def destroy
     @upvote.destroy
     head :no_content
@@ -17,14 +17,10 @@ class UpvotesController < ApplicationController
 private
 
   def set_problem
-    @problem = Problem.find(params[:problem_id])  
+    @problem = Problem.find(params[:id])  
   end
 
   def set_upvote
-    @upvote = current_user.upvotes.find(params[:id])
-  end
-
-  def upvote_params
-    params.require(:upvote).permit(:problem_id, :user_id)
+    @upvote = current_user.upvotes.find_by!(problem_id: @problem.id)
   end
 end
