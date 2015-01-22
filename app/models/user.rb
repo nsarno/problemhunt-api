@@ -15,11 +15,23 @@ class User < ActiveRecord::Base
     self.rooms.include? room
   end
 
-  def registration_for room
-    self.rooms.find room.id
-  end
-
   def owner? room
     self.owned_rooms.include? room
+  end
+
+  def follow room
+    self.rooms << room
+  end
+
+  def unfollow room
+    self.registrations.find_by!(room: room).destroy
+  end
+
+  def upvote problem
+    self.upvotes.create(problem: problem)
+  end
+
+  def downvote problem
+    self.upvotes.find_by!(problem: problem).destroy
   end
 end

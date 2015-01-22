@@ -59,11 +59,4 @@ RSpec.describe User, :type => :model do
     room.users << user
     expect(user.registered? room).to eq(true)
   end
-
-  it 'finds the registration for a given room' do
-    room = create(:room)
-    expect { user.registration_for(room) }.to raise_error(ActiveRecord::RecordNotFound)
-    room.users << user
-    expect { user.registration_for(room) }.not_to raise_error
-  end
 end

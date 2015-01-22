@@ -16,7 +16,4 @@ class Problem < ActiveRecord::Base
     self.upvotes.select { |uv| uv.user == user }.any?
   end
 
-  def upvote_for user
-    self.upvotes.select { |uv| uv.user == user }.first
-  end
 end

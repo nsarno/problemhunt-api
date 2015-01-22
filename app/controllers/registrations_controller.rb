@@ -1,24 +1,20 @@
 class RegistrationsController < ApplicationController
   before_filter :authenticate
-  before_filter :set_room, only: [:create]
-  before_filter :set_registration, only: [:destroy]
+  before_filter :set_room, only: [:create, :destroy]
 
   def create
-    save_and_render @room.registrations.new(user: current_user)
+    current_user.follow @room
+    head :created
   end
 
   def destroy
-    @registration.destroy
+    current_user.unfollow @room
     head :no_content
   end
 
 private
 
   def set_room
-    @room = Room.find(params[:room_id])
-  end
-
-  def set_registration
-    @registration = current_user.registrations.find(params[:id])
+    @room = Room.find(params[:id])
   end
 end
